@@ -4,7 +4,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { format } from 'date-fns';
 
 interface LivenessData {
-  blockTime: Date;
+  blockTime: number;
   timeDiff?: number;
   rollingAvg?: number;
   zScoreBoundary?: number;
@@ -37,7 +37,7 @@ const LivenessChart = ({ projectName, metricType }: LivenessChartProps) => {
 
         const processedData = jsonData.map((d: LivenessData) => ({
           ...d,
-          blockTime: new Date(d.blockTime),
+          blockTime: new Date(d.blockTime).getTime(),
           rollingAvg: d.rollingAvg ?? undefined,
           zScoreBoundary: d.zScoreBoundary ?? undefined
         })).filter((d: LivenessData) => d.timeDiff !== undefined);
@@ -77,8 +77,11 @@ const LivenessChart = ({ projectName, metricType }: LivenessChartProps) => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis
               dataKey="blockTime"
+              type="number"
               tickFormatter={(time) => format(new Date(time), 'MM/dd')}
+              scale="time"
               minTickGap={30}
+              domain={['dataMin', 'dataMax']}
             />
             <YAxis
               domain={['auto', 'auto']}
