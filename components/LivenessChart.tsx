@@ -35,7 +35,7 @@ const LivenessChart = ({ projectName, metricType }: LivenessChartProps) => {
           throw new Error('Invalid data format from API');
         }
 
-        const processedData = jsonData.map((d: any) => ({
+        const processedData = jsonData.map((d: LivenessData) => ({
           ...d,
           blockTime: new Date(d.blockTime),
           rollingAvg: d.rollingAvg ?? undefined,
