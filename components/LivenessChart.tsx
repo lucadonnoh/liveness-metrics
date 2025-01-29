@@ -90,10 +90,24 @@ const LivenessChart = ({ projectName, metricType }: LivenessChartProps) => {
             />
             <Tooltip
               labelFormatter={(label) => format(new Date(label), 'PPpp')}
-              formatter={(value) => [
-                Number(value).toFixed(2) + ' minutes',
-                'Value'
-              ]}
+              formatter={(value, name) => {
+                const formattedValue = `${Number(value).toFixed(2)} minutes`;
+                let displayName = '';
+                switch (name) {
+                  case 'timeDiff':
+                    displayName = 'Interval';
+                    break;
+                  case 'rollingAvg':
+                    displayName = '7-Day Average';
+                    break;
+                  case 'zScoreBoundary':
+                    displayName = 'Anomaly Threshold';
+                    break;
+                  default:
+                    displayName = name.toString();
+                }
+                return [formattedValue, displayName];
+              }}
             />
             <Line
               type="monotone"
