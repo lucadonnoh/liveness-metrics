@@ -78,7 +78,7 @@ const LivenessChart = ({ projectName, metricType }: LivenessChartProps) => {
             <XAxis
               dataKey="blockTime"
               type="number"
-              tickFormatter={(time) => format(new Date(time), 'MM/dd')}
+              tickFormatter={(time) => format(new Date(time), 'dd/MM')}
               scale="time"
               minTickGap={30}
               domain={['dataMin', 'dataMax']}
