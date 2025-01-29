@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { format } from 'date-fns';
+import { formatMinutesToHours } from '../utils/formatTime';
 
 interface LivenessData {
   blockTime: number;
@@ -86,12 +87,12 @@ const LivenessChart = ({ projectName, metricType }: LivenessChartProps) => {
             <YAxis
               domain={['auto', 'auto']}
               width={80}
-              tickFormatter={(value) => `${Math.round(value)}m`}
+              tickFormatter={(value) => `${formatMinutesToHours(value)}`}
             />
             <Tooltip
               labelFormatter={(label) => format(new Date(label), 'PPpp')}
               formatter={(value, name) => {
-                const formattedValue = `${Number(value).toFixed(2)} minutes`;
+                const formattedValue = formatMinutesToHours(value as number);
                 let displayName = '';
                 switch (name) {
                   case 'timeDiff':

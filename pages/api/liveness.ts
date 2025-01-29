@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { formatMinutesToHours } from '../../utils/time';
 
 interface ProcessedData {
   blockTime: Date;
